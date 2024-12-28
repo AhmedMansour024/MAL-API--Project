@@ -1,0 +1,75 @@
+/* Size for brand */
+nav .navbar-brand
+{
+    font-size: xx-large;
+}
+
+/* Colors for brand for finance set */
+nav .navbar-brand .blue
+{
+    color: #537fbe;
+}
+nav .navbar-brand .red
+{
+    color: #ea433b;
+}
+nav .navbar-brand .yellow
+{
+    color: #f5b82e;
+}
+nav .navbar-brand .green
+{
+    color: #2e944b;
+}
+
+.feature {
+    margin: 10px;
+    padding: 50px 20px;
+}
+
+.header {
+    background-color: #477bff;
+    color: #fff;
+    margin-bottom: 2rem;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.pad {
+    padding: 20px;
+}
+
+.bpad {
+    padding-bottom: 10px;
+}
+
+.min-h720 {
+    min-height: 720px;
+}
+
+.mar {
+    margin: 20px;
+}
+
+.lmar {
+    margin-left: 10px;
+}
+
+.bmar {
+    margin-bottom: 10px;
+}
+
+.animated-rainbow {
+    font-size: 1rem;
+    font-family: Arial Black, Gadget, sans-serif;
+    background: linear-gradient(to left, #f00, #ff2b00, #f50, #ff8000, #fa0, #ffd500, #ff0, #d4ff00, #af0, #80ff00, #5f0, #2bff00, #0f0, #00ff2a, #0f5, #00ff80, #0fa, #00ffd5, #0ff, #00d5ff, #0af, #0080ff, #05f, #002aff, #00f, #2b00ff, #50f, #8000ff, #a0f, #d400ff, #f0f, #ff00d4, #f0a, #ff0080, #f05, #ff002b, #f00);
+    animation: rainbow-move-left-right 15s linear infinite alternate;
+    -webkit-background-clip: text;
+    background-clip: text;
+   -webkit-text-fill-color: transparent;
+}
+
+@keyframes rainbow-move-left-right {
+    0% {background-position: 0 0    }
+    100% {background-position: -500px 0}
+}

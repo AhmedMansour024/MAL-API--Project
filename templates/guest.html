@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+    {% block title %}
+    Guest
+    {% endblock %}
+
+    
+    {% block nabar_block %}
+
+    <div class="collapse navbar-collapse" id="navbar">
+
+            <ul class="navbar-nav ms-auto mt-2">
+                <li>
+                <form action="/search" method="post" class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" name="sname" placeholder="Search" aria-label="Search" required minlength="1" maxlength="100">
+                    <select class="form-select" aria-label="Default select example" name="snumber">
+                        <option selected disabled>Number Of Result</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                    <button class="btn btn-outline-success lmar" type="submit">Search</button>
+                    </form>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ms-auto mt-2">
+                <li class="nav-item"><a class="nav-link" href="/guest">Guest</a></li>
+                <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+            </ul>
+
+    </div>
+    {% endblock %}
+
+
+    {% block main %}
+    <div class="text-center">
+        <img src="https://thumbs.dreamstime.com/b/portrait-beautiful-happy-cat-thumbs-up-as-sign-excellent-work-white-background-ai-generative-portrait-beautiful-303892218.jpg" alt="Cat Ok" class="mar">
+        <h1 class="bmar">Welcome To Guest Page</h1>
+        <p class="bmar">You Can Use Search To Try MyAnimeList API</p>
+    </div>
+    {% endblock %}

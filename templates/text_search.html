@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+
+Text Search
+
+{% endblock %}
+
+
+{% block main %}
+
+<div class="text-center">
+    <div class="feature">
+        <h2>Text Search</h2>
+    </div>
+
+    <form action="text_search" method="post" class="form-floating row g-3" enctype="multipart/form-data">
+        <h3 class="text-start">Enter Anime Names, one anime a Line:</h3>
+        <textarea class="form-control" aria-label="With textarea" name="textinputarea"></textarea>
+
+        <div class="col-12">
+            <button class="btn btn-outline-primary" type="submit" >Fetch Data</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

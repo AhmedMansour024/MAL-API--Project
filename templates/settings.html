@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+
+User Settings
+
+{% endblock %}
+
+
+{% block main %}
+
+<div class="feature text-center pad">
+    <h1>User Settings</h1>
+</div>
+
+<form action="/settings" method="post" class="row">
+    <div class="row">
+        <div>
+            <label for="confirmuser" class="form-text bpad">User Name Erase Confirmation !</label>
+            <input type="text" class="form-control" id="confirmuser" name="confirmusername" placeholder="Enter Your User Name ( Upper Case ) to Confirm User Erase!" aria-label="User Name Confirmation">
+        </div>
+    </div>
+    <div class="mar text-center">
+        <button class="btn btn-primary" type="submit">Remove User</button>
+    </div>
+</form>
+{% endblock %}

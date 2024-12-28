@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+
+Search Result
+
+{% endblock %}
+
+
+{% block main %}
+
+    <div class="text-center">
+        <div class="feature">
+            <h2>Text File Search</h2>
+        </div>
+    
+        <form action="/file_search" method="post" class="form-floating row g-3" enctype="multipart/form-data">
+            <div class="mb-3">
+                <input class="form-control" type="file" id="formFile" name="filename" title="Text File" placeholder="Choose A Valid txt file" required>
+            </div>
+
+            <div class="col-12">
+                <button class="btn btn-outline-primary" type="submit" >Fetch Data</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

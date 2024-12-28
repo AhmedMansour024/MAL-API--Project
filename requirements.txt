@@ -1,0 +1,4 @@
+Flask==2.3.0            # Or your current version of Flask
+Flask-Session==0.4.0    # Or your current version of Flask-Session
+Werkzeug==2.3.0         # Or your current version of Werkzeug
+requests==2.28.1        # Or your current version of Requests

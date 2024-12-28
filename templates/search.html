@@ -1,0 +1,166 @@
+{% extends "layout.html" %}
+
+{% block title %}
+
+{% if not view_result %}
+Search Result
+{% else %}
+Saved Animes
+{% endif %}
+
+{% endblock %}
+
+
+{% block main %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Select all the buttons
+            const buttons = document.querySelectorAll('button[id="add_name_button"]');
+    
+            // Add click event listener to each button
+            buttons.forEach(button => {
+                button.addEventListener('click', async function() {
+                    // Find the parent div of the clicked button
+                    const parentDiv = button.closest('.container');
+    
+                    // Get the content of the .anime_title and .alt_title elements within this parent div
+                    const IdValue = parentDiv.querySelector('.anime_id') ? parentDiv.querySelector('.anime_id').textContent : '';
+                    const TitleValue = parentDiv.querySelector('.anime_title') ? parentDiv.querySelector('.anime_title').textContent : '';
+                    const altTitleValue = parentDiv.querySelector('.alt_title') ? parentDiv.querySelector('.alt_title').textContent.split("Alternative Titles: ")[1] : '';
+    
+                    // Send the data to the server using fetch (POST request)
+                    try {
+                        const response = await fetch('/add_name', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                anime_id: IdValue,
+                                anime_title: TitleValue,
+                                alt_title: altTitleValue
+                            })
+                        });
+    
+                        // Handle the server response
+                        const result = await response.json();
+    
+                        if (response.ok) {
+                            // Update the message on the page
+                            document.getElementById('header_message').style.display = 'block'
+                            document.getElementById('message').classList = result.type;
+                            document.getElementById('message').innerText = result.message;
+                            // Set a timer to hide the element after 5 seconds (5000 ms)
+                            setTimeout(function() {
+                                document.getElementById('header_message').style.display = 'none';
+                            }, 5000);  // 5000 ms = 5 seconds
+                        } else {
+                            console.error('Error:', error);
+                            alert('An error occurred while adding data. ' + error);
+                            }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('An error occurred while adding data. ' + error);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    {% if not view_result %}
+    <div class="feature text-center pad">
+        <h2 class="text-success">{{sname}}</h2>
+        <h3>Search Result</h3>
+    </div>
+    {% else %}
+    <div class="feature text-center pad">
+        <h3>Saved Animes</h3>
+    </div>
+    {% endif %}
+
+
+    {% if search_data[0] == "No Data" %}
+        <div class="text-center">
+            <h1>No Result Found</h1>
+        </div>
+
+    {% elif search_data == "No Animes Saved" %}
+        <div class="text-center">
+            <h1>No Animes Saved, Please Add Animes.</h1>
+        </div>
+        
+    {% else %}
+
+    {% for i in range(search_data|length) %}
+
+        <div class="container border text-left">
+            {% if not user %}           <!-- if the user is a guest -->
+            <div class="row row-cols-1 border-bottom pad">
+                <h2>{{search_data[i].result.title}}</h2>
+            </div>
+
+            {% else %}
+            <div class="row border-bottom pad">
+                <h2 class="anime_id" hidden>{{search_data[i].result.id}}</h2>
+                <h2 class="col-sm col-sm-10 anime_title">{{search_data[i].result.title}}</h2>
+                {% if not remove_name %}
+                    <form class="col-sm col-sm-2">
+                        <button class="col-12 btn btn-outline-success" type="button" id="add_name_button">Add</button>
+                    </form>
+
+                {% else %}
+                    <form action="/remove_name" method="post" class="col-sm col-sm-2">
+                        <input name="anime_id" value="{{search_data[i].result.id}}" hidden>
+                        <input name="anime_title" value="{{search_data[i].result.title}}" hidden>
+                        <button class="col-12 btn btn-outline-danger" type="submit" id="remove_name_button">Remove</button>
+                    </form>
+                
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-sm-6 border-end pad">
+                    <img src="{{search_data[i].result.picture}}" class="img-fluid" alt="{{search_data[i].result.title}} Image">
+                </div>
+
+                <div class="col-sm-6 pad">
+                    <h3 class="bpad">Synopsis:</h3>
+                    <p>{{search_data[i].result.synopsis}}</p>
+                </div>
+
+                <div class="col-sm-6 border-top border-end pad">
+                    <h3 class="bpad">Information:</h3>
+                    <p class="alt_title">Alternative Titles: {{search_data[i].result.alt_title or 'No Title'}}</p>
+                    <p>Type: {{search_data[i].result.media_type |upper}}</p>
+                    <p>Episodes: {{search_data[i].result.num_episodes}}</p>
+                    <p>Status: {{search_data[i].result.status}}</p>
+                    <p>Premiered: {{search_data[i].result.start_season.season |title}} {{search_data[i].result.start_season.year}}</p>
+                    <p>Start Date: {{search_data[i].result.start_date}}</p>
+                    {% if search_data[i].result.end_date == 'No End Date' %}
+                        <p>End Date: {{search_data[i].result.status}}</p>
+                    {% else %}
+                        <p>End Date: {{search_data[i].result.end_date}}</p>
+                    {% endif %}
+                    <p>Rating: {{search_data[i].result.rating}}</p>
+                    <p>Studios: {{ search_data[i].result.studios | map(attribute='name') | join(', ') or 'No Studios'}}</p>
+                    <p>Genres: {{ search_data[i].result.genres | join(', ') }} </p>
+                </div>
+
+                <div class="col-sm-6 border-top pad">
+                    <h3 class="bpad">Statistics:</h3>
+                    {% if search_data[i].result.mean == 'No Mean' %}
+                        <p>Score: No Score Yet</p>
+                    {% else %}
+                        <p>Score: {{search_data[i].result.mean}}  (Scored by {{search_data[i].result.num_scoring_users}} users)</p>
+                    {% endif %}
+                    <p>Rank: {{search_data[i].result.rank}}</p>
+                    <p>Popularity: {{search_data[i].result.popularity}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="pad"></div>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
